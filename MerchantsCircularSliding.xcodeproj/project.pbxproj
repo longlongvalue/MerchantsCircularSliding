@@ -15,6 +15,8 @@
 		D468C8571D86410E002F16B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D468C8551D86410E002F16B9 /* LaunchScreen.storyboard */; };
 		D468C8621D86410E002F16B9 /* MerchantsCircularSlidingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D468C8611D86410E002F16B9 /* MerchantsCircularSlidingTests.m */; };
 		D468C86D1D86410E002F16B9 /* MerchantsCircularSlidingUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D468C86C1D86410E002F16B9 /* MerchantsCircularSlidingUITests.m */; };
+		D468C8881D864B38002F16B9 /* GllCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D468C8841D864B38002F16B9 /* GllCollectionViewCell.m */; };
+		D468C8891D864B38002F16B9 /* GllCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D468C8861D864B38002F16B9 /* GllCollectionViewFlowLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,11 @@
 		D468C8681D86410E002F16B9 /* MerchantsCircularSlidingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MerchantsCircularSlidingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D468C86C1D86410E002F16B9 /* MerchantsCircularSlidingUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MerchantsCircularSlidingUITests.m; sourceTree = "<group>"; };
 		D468C86E1D86410E002F16B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D468C8831D864B38002F16B9 /* GllCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GllCollectionViewCell.h; sourceTree = "<group>"; };
+		D468C8841D864B38002F16B9 /* GllCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GllCollectionViewCell.m; sourceTree = "<group>"; };
+		D468C8851D864B38002F16B9 /* GllCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GllCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		D468C8861D864B38002F16B9 /* GllCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GllCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		D468C8871D864B38002F16B9 /* GllMainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GllMainCell.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +108,7 @@
 		D468C8461D86410E002F16B9 /* MerchantsCircularSliding */ = {
 			isa = PBXGroup;
 			children = (
+				D468C8821D864B38002F16B9 /* MainMerchantModelCell */,
 				D468C84A1D86410E002F16B9 /* AppDelegate.h */,
 				D468C84B1D86410E002F16B9 /* AppDelegate.m */,
 				D468C84D1D86410E002F16B9 /* ViewController.h */,
@@ -138,6 +146,18 @@
 				D468C86E1D86410E002F16B9 /* Info.plist */,
 			);
 			path = MerchantsCircularSlidingUITests;
+			sourceTree = "<group>";
+		};
+		D468C8821D864B38002F16B9 /* MainMerchantModelCell */ = {
+			isa = PBXGroup;
+			children = (
+				D468C8831D864B38002F16B9 /* GllCollectionViewCell.h */,
+				D468C8841D864B38002F16B9 /* GllCollectionViewCell.m */,
+				D468C8851D864B38002F16B9 /* GllCollectionViewFlowLayout.h */,
+				D468C8861D864B38002F16B9 /* GllCollectionViewFlowLayout.m */,
+				D468C8871D864B38002F16B9 /* GllMainCell.h */,
+			);
+			path = MainMerchantModelCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,6 +227,7 @@
 				TargetAttributes = {
 					D468C8431D86410E002F16B9 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = S4Y7TN79Y8;
 					};
 					D468C85C1D86410E002F16B9 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -270,6 +291,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D468C8891D864B38002F16B9 /* GllCollectionViewFlowLayout.m in Sources */,
+				D468C8881D864B38002F16B9 /* GllCollectionViewCell.m in Sources */,
 				D468C84F1D86410E002F16B9 /* ViewController.m in Sources */,
 				D468C84C1D86410E002F16B9 /* AppDelegate.m in Sources */,
 				D468C8491D86410E002F16B9 /* main.m in Sources */,
@@ -415,10 +438,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = MerchantsCircularSliding/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.taokatao.GLL.MerchantsCircularSliding;
+				PRODUCT_BUNDLE_IDENTIFIER = com.taokatao.cardmee;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "a2337b4d-2c6d-45b4-9aeb-bf86f013238f";
 			};
 			name = Debug;
 		};
@@ -426,10 +451,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = MerchantsCircularSliding/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.taokatao.GLL.MerchantsCircularSliding;
+				PRODUCT_BUNDLE_IDENTIFIER = com.taokatao.cardmee;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "a2337b4d-2c6d-45b4-9aeb-bf86f013238f";
 			};
 			name = Release;
 		};
