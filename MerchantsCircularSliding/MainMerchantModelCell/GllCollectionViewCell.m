@@ -38,20 +38,21 @@
         self.maskView.alpha = 0.6;
         [self addSubview:self.maskView];
         
-        self.leftImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, (CELL_HEIGHT - CELL_WIDTH * 0.2) * 0.5, 60, 60)];
+        self.leftImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, (CELL_HEIGHT - CELL_LEFTIMAGEWH) * 0.5, CELL_LEFTIMAGEWH, CELL_LEFTIMAGEWH)];
         
         self.leftImageView.layer.cornerRadius = 10;
         self.leftImageView.layer.masksToBounds = YES;
         [self addSubview:self.leftImageView];
         
-        self.title = [[UILabel alloc] initWithFrame:CGRectMake(TITLE_MARGINX, (CELL_HEIGHT-TITLE_HEIGHT)/2, CELL_WIDTH, TITLE_HEIGHT)];
+        self.title = [[UILabel alloc] init];
         self.title.textColor = [UIColor blackColor];
         self.title.font = [UIFont systemFontOfSize:30];
         self.title.textAlignment = NSTextAlignmentLeft;
         [self addSubview:self.title];
-        self.contentMode = UIViewContentModeCenter;
-        self.title.layer.transform = CATransform3DMakeScale(0.5, 0.5, 1);
+//        self.contentMode = UIViewContentModeCenter;
+        self.title.layer.transform = CATransform3DMakeScale(TITLE_SCALE, TITLE_SCALE , 1);
         [self.title setBackgroundColor:[UIColor clearColor]];
+        self.title.frame = CGRectMake(CGRectGetMaxX(self.leftImageView.frame) + TITLE_MARGINX, (CELL_HEIGHT-TITLE_HEIGHT)/2, CELL_WIDTH - (CGRectGetMaxX(self.leftImageView.frame) + TITLE_MARGINX), TITLE_HEIGHT);
         
         self.desc = [[UILabel alloc] initWithFrame:CGRectMake(0, (CELL_HEIGHT-TITLE_HEIGHT)/2+30,CELL_WIDTH - CGRectGetMaxX(self.leftImageView.frame) - TITLE_MARGINX, 30)];
         self.desc.textColor = [UIColor blackColor];
@@ -73,15 +74,15 @@
         self.leftImageView.layer.transform = CATransform3DMakeScale(1+0.2, 1+0.2, 1);
         
         CGRect leftImageViewFrame = self.leftImageView.frame;
-        leftImageViewFrame.origin.y = CGRectGetMaxY(self.frame) - CGRectGetWidth(self.leftImageView.frame) - (CELL_HEIGHT - CELL_WIDTH * 0.2) * 0.5;
+        leftImageViewFrame.origin.y = CGRectGetMaxY(self.frame) - CGRectGetWidth(self.leftImageView.frame) - (CELL_HEIGHT - CELL_LEFTIMAGEWH) * 0.5;
         self.leftImageView.frame = leftImageViewFrame;
         
-        self.title.layer.transform = CATransform3DMakeScale(0.8, 0.8, 1);
+        self.title.layer.transform = CATransform3DMakeScale( TITLE_SCALE  + 0.2, TITLE_SCALE + 0.2, 1);
         
         self.desc.alpha = 0.85;
         //        self.title.center = CGPointMake([UIScreen mainScreen].bounds.size.width/2, self.contentView.center.y);
         
-        self.title.frame = CGRectMake(CGRectGetMaxX(leftImageViewFrame) + TITLE_MARGINX, CGRectGetMinY(leftImageViewFrame) + (CGRectGetHeight(leftImageViewFrame) - CGRectGetHeight(self.title.frame)) * 0.5 - (CGRectGetHeight(leftImageViewFrame) - CGRectGetHeight(self.title.frame)) * 0.4, self.title.frame.size.width, self.title.frame.size.height);
+        self.title.frame = CGRectMake(CGRectGetMaxX(leftImageViewFrame) + TITLE_MARGINX, CGRectGetMinY(leftImageViewFrame) + (CGRectGetHeight(leftImageViewFrame) - CGRectGetHeight(self.title.frame)) * 0.5 - (CGRectGetHeight(leftImageViewFrame) - CGRectGetHeight(self.title.frame)) * 0.4, CELL_WIDTH - (CGRectGetMaxX(leftImageViewFrame) + TITLE_MARGINX), self.title.frame.size.height);
         
         self.desc.frame = CGRectMake(CGRectGetMinX(self.title.frame), CGRectGetMaxY(self.leftImageView.frame) - CGRectGetHeight(self.desc.frame), self.desc.frame.size.width, self.desc.frame.size.height);
         

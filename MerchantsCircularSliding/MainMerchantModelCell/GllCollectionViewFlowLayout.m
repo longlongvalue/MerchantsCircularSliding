@@ -30,19 +30,6 @@
         self.minimumInteritemSpacing = 0;
         self.minimumLineSpacing = 0;
         
-//        UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, layout.collectionViewContentSize.height - SC_IMAGEVIEW_HEIGHT + 32, CELL_WIDTH, SC_IMAGEVIEW_HEIGHT - 32)];
-//        
-//        backView.backgroundColor = [UIColor blueColor];
-//        
-//        [gllCollectionView addSubview:backView];
-//        
-//        UILabel *titleLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CELL_WIDTH, TITLE_HEIGHT)];
-//        titleLable.text = @"No More Data";
-//        titleLable.textColor = [UIColor whiteColor];
-//        titleLable.textAlignment = NSTextAlignmentCenter;
-//        titleLable.backgroundColor = [UIColor blueColor];
-//        [backView addSubview:titleLable];
-        
     }
     return self;
 }
@@ -84,7 +71,7 @@
 {
     
     float screen_y = self.collectionView.contentOffset.y;
-    float current_floor = floorf((screen_y-HEADER_HEIGHT)/DRAG_INTERVAL)+1;
+    NSInteger current_floor = floorf((screen_y-HEADER_HEIGHT)/DRAG_INTERVAL)+1;
     float current_mod = fmodf((screen_y-HEADER_HEIGHT), DRAG_INTERVAL);
     float percent = current_mod/DRAG_INTERVAL;
     
@@ -95,6 +82,7 @@
         correctRect = CGRectMake(0, 0, 320, RECT_RANGE);
     }else{
         correctRect = CGRectMake(0, HEADER_HEIGHT+HEADER_HEIGHT+CELL_HEIGHT*(current_floor-2), CELL_WIDTH, RECT_RANGE);
+        NSLog(@"%@",NSStringFromCGRect(correctRect));
     }
     
     NSArray* array = [super layoutAttributesForElementsInRect:correctRect];
@@ -104,7 +92,7 @@
         for(UICollectionViewLayoutAttributes *attributes in array){
             NSInteger row = attributes.indexPath.row;
             if(row < current_floor){
-                attributes.zIndex = 0;
+//                attributes.zIndex = 0;
                 attributes.frame = CGRectMake(0, (HEADER_HEIGHT-DRAG_INTERVAL)+DRAG_INTERVAL*row, CELL_WIDTH, CELL_CURRHEIGHT);
                 
                 [self setEffectViewAlpha:1 forIndexPath:attributes.indexPath];
@@ -125,7 +113,7 @@
          
             }
             
-            [self setImageViewOfItem:(screen_y-attributes.frame.origin.y)/568*IMAGEVIEW_MOVE_DISTANCE withIndexPath:attributes.indexPath];
+            [self setImageViewOfItem:(screen_y-attributes.frame.origin.y)/CELL_HIGHT*IMAGEVIEW_MOVE_DISTANCE withIndexPath:attributes.indexPath];
             
         }
         
@@ -139,7 +127,7 @@
                 [self setEffectViewAlpha:0 forIndexPath:attributes.indexPath];
             }
             //下滑时设置顶部背景图片视觉差效果
-//            [self setImageViewOfItem:(screen_y-attributes.frame.origin.y)/568*IMAGEVIEW_MOVE_DISTANCE withIndexPath:attributes.indexPath];
+//            [self setImageViewOfItem:(screen_y-attributes.frame.origin.y)/CELL_HIGHT*IMAGEVIEW_MOVE_DISTANCE withIndexPath:attributes.indexPath];
             
         }
     }
@@ -170,25 +158,26 @@
 -(void)setEffectViewAlpha:(CGFloat)percent forIndexPath:(NSIndexPath *)indexPath
 {
     GllCollectionViewCell *cell = (GllCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-    //遮罩透明度变化
-    cell.maskView.alpha = (1-percent)*0.6;
-    
-    //单元格左图片的放大缩小动画
-    cell.leftImageView.layer.transform = CATransform3DMakeScale(1+0.2*percent, 1+0.2*percent, 1);
-    //重新定义左图片的Frame
-    CGRect leftImageViewFrame = cell.leftImageView.frame;
-    leftImageViewFrame.origin.y = CGRectGetHeight(cell.frame) - CGRectGetHeight(cell.leftImageView.frame) - (CELL_HEIGHT - CELL_WIDTH * 0.2) * 0.5;
-    cell.leftImageView.frame = leftImageViewFrame;
-    
-    //标题动画
-    cell.title.layer.transform = CATransform3DMakeScale(0.5+0.3*percent, 0.5+0.3*percent, 1);
-
-    cell.title.frame = CGRectMake(CGRectGetMaxX(cell.leftImageView.frame) + 10, CGRectGetMinY(cell.leftImageView.frame) + (CGRectGetHeight(cell.leftImageView.frame) - CGRectGetHeight(cell.title.frame)) * 0.5 - percent*(CGRectGetHeight(cell.leftImageView.frame) - CGRectGetHeight(cell.title.frame)) * 0.4, cell.title.frame.size.width, cell.title.frame.size.height);
-    
-    cell.desc.frame = CGRectMake(CGRectGetMinX(cell.title.frame), CGRectGetMaxY(cell.leftImageView.frame) - CGRectGetHeight(cell.desc.frame), cell.desc.frame.size.width, cell.desc.frame.size.height);
-    cell.desc.alpha = percent*0.85;
-    
-    
+    if (cell) {
+        
+        //遮罩透明度变化
+        cell.maskView.alpha = (1-percent)*0.6;
+        
+        //单元格左图片的放大缩小动画
+        cell.leftImageView.layer.transform = CATransform3DMakeScale(1+0.2*percent, 1+0.2*percent, 1);
+        //重新定义左图片的Frame
+        CGRect leftImageViewFrame = cell.leftImageView.frame;
+        leftImageViewFrame.origin.y = CGRectGetHeight(cell.frame) - CGRectGetHeight(cell.leftImageView.frame) - (CELL_HEIGHT - CELL_LEFTIMAGEWH) * 0.5;
+        cell.leftImageView.frame = leftImageViewFrame;
+        
+        //标题动画
+        cell.title.layer.transform = CATransform3DMakeScale(TITLE_SCALE +0.2*percent, TITLE_SCALE +0.2*percent, 1);
+        
+        cell.title.frame = CGRectMake(CGRectGetMaxX(cell.leftImageView.frame) + 10, CGRectGetMinY(cell.leftImageView.frame) + (CGRectGetHeight(cell.leftImageView.frame) - CGRectGetHeight(cell.title.frame)) * 0.5 - percent*(CGRectGetHeight(cell.leftImageView.frame) - CGRectGetHeight(cell.title.frame)) * 0.4, CELL_WIDTH - (CGRectGetMaxX(cell.leftImageView.frame) + TITLE_MARGINX), cell.title.frame.size.height);
+        
+        cell.desc.frame = CGRectMake(CGRectGetMinX(cell.title.frame), CGRectGetMaxY(cell.leftImageView.frame) - CGRectGetHeight(cell.desc.frame), cell.desc.frame.size.width, cell.desc.frame.size.height);
+        cell.desc.alpha = percent*0.85;
+    }
     
 }
 
@@ -201,6 +190,7 @@
     CGFloat cc;
     CGFloat count;
     if (screen_y < 0) {
+        
         return proposedContentOffset;
     }
     if(velocity.y == 0){ //此情况可能由于拖拽不放手，停下时再放手的可能，所以加速度为0
